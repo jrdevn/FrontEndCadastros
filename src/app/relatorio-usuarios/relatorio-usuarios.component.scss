@@ -1,0 +1,22 @@
+.mat-toolbar {
+    background-color: var(--color-toolbar-secondary);
+}
+
+.mat-toolbar > span {
+    color: black;
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.pesquisas {
+    background-color: var(--color-toolbar-secondary);
+    padding-bottom: 5px;
+}
+
+.bi-search {
+    color: var(--color-primary);
+}
+
+.icons {
+    height: 15px;
+}
