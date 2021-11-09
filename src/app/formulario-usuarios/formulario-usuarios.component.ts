@@ -67,7 +67,7 @@ export class FormularioUsuariosComponent implements OnInit, Notificacao {
       Email: ['', [Validators.required, Validators.email]],
       DataNascimento: ['', [Validators.required, Validators.required]],
       SexoId: ['', [Validators.required, Validators.required]],
-      Senha: ['', [Validators.required, Validators.required]],
+      Senha: ['', [Validators.nullValidator]],
     });
   }
 

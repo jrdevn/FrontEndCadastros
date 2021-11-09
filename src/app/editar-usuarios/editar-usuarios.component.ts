@@ -76,7 +76,7 @@ export class EditarUsuariosComponent implements OnInit, Exclusao, Notificacao {
       Email: [this.usuario.Email, [Validators.required, Validators.email]],
       DataNascimento: [this.usuario.DataNascimento, [Validators.required, Validators.required]],
       SexoId: [this.usuario.SexoId, [Validators.required, Validators.required]],
-      Senha: [this.usuario.Senha, [Validators.required, Validators.required]],
+      Senha: [this.usuario.Senha, [Validators.nullValidator]],
       Ativo: [this.usuario.Ativo, [Validators.required, Validators.required]],
     });
   }

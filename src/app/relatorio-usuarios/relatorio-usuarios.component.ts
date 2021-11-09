@@ -117,7 +117,6 @@ export class RelatorioUsuariosComponent implements OnInit, Exclusao, Notificacao
       timeOut: 3000,
       closeButton: true,
     });
-    this.toastr.clear();
   }
 
   cadastraUsuario(): void {
