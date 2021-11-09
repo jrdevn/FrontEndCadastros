@@ -10,10 +10,14 @@ a {
     color: #D3D3D3;
 }
 
+a:hover {
+    color: #f6f6f6;
+}
+
 
 .active {
     color: var(--color-secondary);
-    background-color: var(--color-primary-dark);
+    font-weight: 500;
     border-radius: 17%;
 }
 
