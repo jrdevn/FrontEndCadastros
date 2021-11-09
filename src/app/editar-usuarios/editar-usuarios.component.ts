@@ -40,7 +40,7 @@ export class EditarUsuariosComponent implements OnInit, Exclusao, Notificacao {
   usuario: Usuario;
   usuarioId: string;
   sexos: Sexo[];
-  maxDate: any;
+  dataLimite: any;
   usuarioForm: FormGroup;
   formularioValido = true;
   constructor(private formBuilder: FormBuilder,
@@ -63,12 +63,10 @@ export class EditarUsuariosComponent implements OnInit, Exclusao, Notificacao {
     });
   }
 
-
-
   ngOnInit(): void {
     const usuarioId = this.route.snapshot.paramMap.get('usuarioId');
     this.carregaUsuario(usuarioId);
-    this.maxDate = moment().subtract(5, 'years');
+    this.dataLimite = moment().subtract(5, 'years');
     this.carregaGeneros();
   }
 
@@ -82,7 +80,6 @@ export class EditarUsuariosComponent implements OnInit, Exclusao, Notificacao {
       Ativo: [this.usuario.Ativo, [Validators.required, Validators.required]],
     });
   }
-
 
   async notificacao(message: string, title: string): Promise<void> {
     const toaster = this.toastr.success(message, title, {
@@ -112,11 +109,11 @@ export class EditarUsuariosComponent implements OnInit, Exclusao, Notificacao {
     });
   }
 
-    // tslint:disable-next-line: typedef
-    get formControls() {
-      return this.usuarioForm.controls;
-    }
-  
+  // tslint:disable-next-line: typedef
+  get formControls() {
+    return this.usuarioForm.controls;
+  }
+
   salvarUsuario(): void {
     if (this.usuarioForm.valid) {
       this.formularioValido = true;

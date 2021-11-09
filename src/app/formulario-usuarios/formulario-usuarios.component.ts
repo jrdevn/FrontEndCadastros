@@ -46,13 +46,12 @@ export class FormularioUsuariosComponent implements OnInit, Notificacao {
   }
 
 
-  maxDate: any;
+  dataLimite: any;
   formularioValido = true;
   usuarioForm: FormGroup;
 
   ngOnInit(): void {
-    this.maxDate = moment().subtract(5, 'years');
-    console.log(this.maxDate);
+    this.dataLimite = moment().subtract(5, 'years');
     this.carregaGeneros();
     this.createForm();
   }
@@ -71,7 +70,6 @@ export class FormularioUsuariosComponent implements OnInit, Notificacao {
       Senha: ['', [Validators.required, Validators.required]],
     });
   }
-
 
   async carregaGeneros(): Promise<void> {
     this.generoService.getAll().subscribe((response: HttpResponse<Sexo[]>) => {

@@ -55,8 +55,6 @@ export class RelatorioUsuariosComponent implements OnInit, Exclusao, Notificacao
     });
   }
 
-
-
   async carregaUsuariosPorNome(nome: string): Promise<void> {
     if (nome != null && nome !== '') {
       this.spinner.show();
@@ -92,8 +90,6 @@ export class RelatorioUsuariosComponent implements OnInit, Exclusao, Notificacao
     this.router.navigate(['/editar-usuarios', { usuarioId: usuario.UsuarioId }]);
   }
 
-
-
   exibirInativos(validador: boolean): void {
     this.ativos = !validador;
     this.carregaUsuarios(this.ativos);
@@ -103,7 +99,6 @@ export class RelatorioUsuariosComponent implements OnInit, Exclusao, Notificacao
     this.routersService.excluirUsuarioDialog(usuario);
     this.routersService.validaExclusao.subscribe(result => {
       if (result === true) {
-        console.log(result);
         this.routersService.validaExclusao.next(false);
         this.notificacao('Usuario excluido', 'Atenção!');
         this.carregaUsuarios(this.ativos);
@@ -112,7 +107,6 @@ export class RelatorioUsuariosComponent implements OnInit, Exclusao, Notificacao
   }
 
   validaPesquisa(pesquisa: string): void {
-    console.log(pesquisa);
     if (pesquisa === null || pesquisa === '') {
       this.carregaUsuarios(this.ativos);
     }
