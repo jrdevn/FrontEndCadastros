@@ -2,9 +2,62 @@
 
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
+@import '~ngx-toastr/toastr';
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+$md-myprimary: (
+    50 : #e5e6eb,
+    100 : #bec1cc,
+    200 : #9398ab,
+    300 : #676e89,
+    400 : #474f6f,
+    500 : #263056,
+    600 : #222b4f,
+    700 : #1c2445,
+    800 : #171e3c,
+    900 : #0d132b,
+    A100 : #6982ff,
+    A200 : #3658ff,
+    A400 : #032dff,
+    A700 : #0027e9,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$my-custom-primary: mat-palette($md-myprimary);
+$my-custom-accent: mat-palette($mat-pink, 100, 500, A100);
+$my-custom-warn: mat-palette($mat-lime);
+
+$my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-custom-warn);
+
+
+@include angular-material-theme($my-custom-theme);
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root{--color-primary: #263056;
-      --color-toolbar-secondary: #e5e4e2;  }
+      --color-toolbar-secondary: #e5e4e2; 
+      --color-background: #f7f7f6; 
+      --color-primary-dark: #021a2e;
+      --color-secondary: #ffffff; }
+
+
 

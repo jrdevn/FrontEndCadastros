@@ -5,8 +5,10 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/mat
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { GeneroService } from '../api/genero.service';
 import { UsuarioService } from '../api/usuario.service';
+import { Notificacao } from '../interfaces/notificacao';
 import { Sexo } from '../models/sexo';
 import { Usuario } from '../models/usuario';
 
@@ -31,19 +33,21 @@ export const MY_FORMATS = {
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ]
 })
-export class FormularioUsuariosComponent implements OnInit {
+export class FormularioUsuariosComponent implements OnInit, Notificacao {
 
   usuario: Usuario;
   sexos: Sexo[];
   constructor(private formBuilder: FormBuilder,
               private generoService: GeneroService,
               private usuarioService: UsuarioService,
-              private router: Router) {
+              private router: Router,
+              private toastr: ToastrService) {
     this.usuario = new Usuario();
   }
 
-  maxDate: any;
 
+  maxDate: any;
+  formularioValido = true;
   usuarioForm: FormGroup;
 
   ngOnInit(): void {
@@ -51,6 +55,11 @@ export class FormularioUsuariosComponent implements OnInit {
     console.log(this.maxDate);
     this.carregaGeneros();
     this.createForm();
+  }
+
+  // tslint:disable-next-line: typedef
+  get formControls() {
+    return this.usuarioForm.controls;
   }
 
   createForm(): void {
@@ -76,15 +85,26 @@ export class FormularioUsuariosComponent implements OnInit {
 
   salvarUsuario(): void {
     if (this.usuarioForm.valid) {
+      this.formularioValido = true;
       const usuarioResponse = this.usuarioForm.value;
       usuarioResponse.SexoId = Number(usuarioResponse.SexoId);
       this.usuarioService.cadastrarUsuario(usuarioResponse).subscribe((response: any) => {
         if (response) {
+          this.notificacao('Usuario cadastrado!', 'Cadastro');
           this.router.navigateByUrl('/relatorio-usuarios');
         }
       }, error => {
         console.log(error);
       });
+    } else {
+      this.formularioValido = false;
     }
+  }
+
+  async notificacao(message: string, title: string): Promise<void> {
+    const toaster = this.toastr.success(message, title, {
+      timeOut: 2000,
+      closeButton: true,
+    });
   }
 }

@@ -11,12 +11,12 @@
 .salvar {
     background-color: var(--color-primary);
     margin-right: 0.4em;
-    color: white;
+    color: var(--color-secondary);
 }
 
 .excluir {
     background-color: #cc0000;
-    color: white;
+    color: var(--color-secondary);
 }
 
 .buttons-group {
@@ -28,23 +28,22 @@ form > div > label {
     font-weight: bolder;
 }
 
-
 //DEFAULT
 ::ng-deep .mat-form-field {
     .mat-input-element {
-          color: slategray;
+        color: slategray;
     }
     .mat-form-field-label {
-          color: slategray;
+        color: slategray;
     }
     .mat-form-field-underline {
-          background-color: slategray;
+        background-color: slategray;
     }
     .mat-form-field-ripple {
-          background-color: slategray;
+        background-color: slategray;
     }
     .mat-form-field-required-marker {
-          color: slategray;
+        color: slategray;
     }
 }
 
@@ -88,3 +87,18 @@ form > div > label {
     margin-right: 0.9em;
 }
 
+
+mat-card {
+   margin: auto;
+   width: 66%;
+}
+
+.content {
+    background-color: var(--color-background);
+    height: 100%;
+    padding-top: 1.4em;
+}
+
+.errors {
+    color: #e61919;
+}

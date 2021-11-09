@@ -11,12 +11,12 @@
 .salvar {
     background-color: var(--color-primary);
     margin-right: 0.4em;
-    color: white;
+    color: var(--color-secondary);
 }
 
 .excluir {
     background-color: #cc0000;
-    color: white;
+    color: var(--color-secondary);
 }
 
 .buttons-group {
@@ -86,5 +86,21 @@ form > div > label {
 
 .label-data {
     margin-right: 0.9em;
+}
+
+mat-card {
+    margin: auto;
+    width: 66%;
+ 
+ }
+ 
+ .content {
+     background-color: var(--color-background);
+     height: 100%;
+     padding-top: 1.4em;
+ }
+
+ .errors {
+    color: #e61919;
 }
 

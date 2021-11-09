@@ -6,9 +6,11 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { GeneroService } from '../api/genero.service';
 import { UsuarioService } from '../api/usuario.service';
 import { Exclusao } from '../interfaces/exclusao';
+import { Notificacao } from '../interfaces/notificacao';
 import { Sexo } from '../models/sexo';
 import { Usuario } from '../models/usuario';
 import { RoutersService } from '../routers.service';
@@ -33,19 +35,21 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ]
 })
-export class EditarUsuariosComponent implements OnInit, Exclusao {
+export class EditarUsuariosComponent implements OnInit, Exclusao, Notificacao {
 
   usuario: Usuario;
   usuarioId: string;
   sexos: Sexo[];
   maxDate: any;
   usuarioForm: FormGroup;
+  formularioValido = true;
   constructor(private formBuilder: FormBuilder,
               private generoService: GeneroService,
               private route: ActivatedRoute,
               private router: Router,
               private usuarioService: UsuarioService,
-              private routersService: RoutersService) {
+              private routersService: RoutersService,
+              private toastr: ToastrService) {
   }
 
   excluirUsuario(usuario: Usuario): void {
@@ -80,6 +84,13 @@ export class EditarUsuariosComponent implements OnInit, Exclusao {
   }
 
 
+  async notificacao(message: string, title: string): Promise<void> {
+    const toaster = this.toastr.success(message, title, {
+      timeOut: 2000,
+      closeButton: true,
+    });
+  }
+
   async carregaGeneros(): Promise<void> {
     this.generoService.getAll().subscribe((response: HttpResponse<Sexo[]>) => {
       if (response) {
@@ -101,18 +112,27 @@ export class EditarUsuariosComponent implements OnInit, Exclusao {
     });
   }
 
+    // tslint:disable-next-line: typedef
+    get formControls() {
+      return this.usuarioForm.controls;
+    }
+  
   salvarUsuario(): void {
     if (this.usuarioForm.valid) {
+      this.formularioValido = true;
       let usuarioResponse = new Usuario();
       usuarioResponse = this.usuarioForm.value;
       usuarioResponse.UsuarioId = this.usuario.UsuarioId;
       this.usuarioService.editarUsuario(usuarioResponse).subscribe((response: any) => {
         if (response) {
+          this.notificacao('Usuario editado!', 'Edição');
           this.router.navigateByUrl('/relatorio-usuarios');
         }
       }, error => {
         console.log(error);
       });
+    } else {
+      this.formularioValido = false;
     }
   }
 

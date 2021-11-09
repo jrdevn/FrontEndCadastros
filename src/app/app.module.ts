@@ -19,6 +19,10 @@ import { EditarUsuariosComponent } from './editar-usuarios/editar-usuarios.compo
 import { DialogExcluirComponent } from './shared/dialog-excluir/dialog-excluir.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import { ToastrModule } from 'ngx-toastr';
+import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -45,7 +49,14 @@ import {MatButtonModule} from '@angular/material/button';
     MatNativeDateModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    ToastrModule.forRoot({
+      maxOpened: 1,
+      autoDismiss: true,
+    }),
+    MatTooltipModule,
+    MatCardModule,
+    NgxSpinnerModule
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

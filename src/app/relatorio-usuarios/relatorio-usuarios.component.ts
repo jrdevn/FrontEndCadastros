@@ -2,9 +2,12 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Route, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { GeneroService } from '../api/genero.service';
 import { UsuarioService } from '../api/usuario.service';
 import { Exclusao } from '../interfaces/exclusao';
+import { Notificacao } from '../interfaces/notificacao';
 import { Sexo } from '../models/sexo';
 import { Usuario } from '../models/usuario';
 import { RoutersService } from '../routers.service';
@@ -15,30 +18,39 @@ import { DialogExcluirComponent } from '../shared/dialog-excluir/dialog-excluir.
   templateUrl: './relatorio-usuarios.component.html',
   styleUrls: ['./relatorio-usuarios.component.scss']
 })
-export class RelatorioUsuariosComponent implements OnInit, Exclusao {
+export class RelatorioUsuariosComponent implements OnInit, Exclusao, Notificacao {
 
   usuarios: Usuario[];
   sexos: Sexo[];
   pesquisa: string;
   ativos = true;
+  carregou = false;
   constructor(private usuarioService: UsuarioService,
               private generoService: GeneroService,
               private router: Router,
               public dialog: MatDialog,
-              private routersService: RoutersService
+              private routersService: RoutersService,
+              private toastr: ToastrService,
+              private spinner: NgxSpinnerService
   ) { }
+
 
   ngOnInit(): void {
     this.carregaUsuarios(this.ativos);
   }
 
   async carregaUsuarios(ativos: boolean): Promise<void> {
+    this.spinner.show();
     this.usuarioService.getAll(ativos).subscribe((response: HttpResponse<Usuario[]>) => {
       if (response) {
         this.usuarios = response.body;
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 500);
         this.carregaGeneros();
       }
     }, error => {
+      this.spinner.hide();
       console.log(error);
     });
   }
@@ -47,9 +59,13 @@ export class RelatorioUsuariosComponent implements OnInit, Exclusao {
 
   async carregaUsuariosPorNome(nome: string): Promise<void> {
     if (nome != null && nome !== '') {
+      this.spinner.show();
       this.usuarioService.getByDescricao(this.ativos, nome).subscribe((response: HttpResponse<Usuario[]>) => {
         if (response) {
           this.usuarios = response.body;
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 300);
           this.carregaGeneros();
         }
       }, error => {
@@ -84,13 +100,34 @@ export class RelatorioUsuariosComponent implements OnInit, Exclusao {
   }
 
   excluirUsuario(usuario: Usuario): void {
-     this.routersService.excluirUsuarioDialog(usuario);
-     this.routersService.validaExclusao.subscribe(result => {
-       if (result === true) {
+    this.routersService.excluirUsuarioDialog(usuario);
+    this.routersService.validaExclusao.subscribe(result => {
+      if (result === true) {
         console.log(result);
         this.routersService.validaExclusao.next(false);
+        this.notificacao('Usuario excluido', 'Atenção!');
         this.carregaUsuarios(this.ativos);
-       }
-     });
+      }
+    });
   }
+
+  validaPesquisa(pesquisa: string): void {
+    console.log(pesquisa);
+    if (pesquisa === null || pesquisa === '') {
+      this.carregaUsuarios(this.ativos);
+    }
+  }
+
+  async notificacao(message: string, title: string): Promise<void> {
+    const toaster = this.toastr.warning(message, title, {
+      timeOut: 3000,
+      closeButton: true,
+    });
+    this.toastr.clear();
+  }
+
+  cadastraUsuario(): void {
+    this.router.navigateByUrl('/formulario-usuarios');
+  }
+
 }

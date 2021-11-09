@@ -1,3 +1,22 @@
-.mat-toolbar {
+nav {
     background-color: var(--color-primary);
+}
+
+span {
+    color: var(--color-secondary) !important;
+}
+
+a {
+    color: #D3D3D3;
+}
+
+
+.active {
+    color: var(--color-secondary);
+    background-color: var(--color-primary-dark);
+    border-radius: 17%;
+}
+
+.icon {
+    width: 32px;
 }
