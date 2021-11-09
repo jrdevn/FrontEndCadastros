@@ -11,6 +11,7 @@
 .pesquisas {
     background-color: var(--color-toolbar-secondary);
     padding-bottom: 5px;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 5%), inset 0 -1px 0 rgb(0 0 0 / 15%);
 }
 
 .bi-search {
@@ -20,7 +21,6 @@
 .icons {
     height: 15px;
 }
-
 
 .bi-plus-lg {
     color: var(--color-secondary);
@@ -33,5 +33,4 @@
 .content {
     background-color: var(--color-toolbar-secondary);
 }
-
 

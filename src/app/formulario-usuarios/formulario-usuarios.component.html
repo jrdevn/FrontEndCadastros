@@ -5,7 +5,7 @@
     <mat-card>
        <mat-card-content>
           <div class="col-12 mt-2 mb-2">
-             <form [formGroup]="usuarioForm">
+             <form [formGroup]="usuarioForm" >
                 <div class="form-group" style="margin-bottom: 0.3em;">
                    <label for="nome">Nome</label>
                    <input type="text" class="form-control" maxlength="20" id="nome"
@@ -20,7 +20,7 @@
                    <label for="data" class="label-data">Data de nascimento</label>
                    <mat-form-field appearance="legacy" class="datepicker-custom">
                       <input matInput [matDatepicker]="picker" formControlName="DataNascimento" readonly
-                      [max]="dataLimite">
+                      [max]="dataLimite" autocomplete="no">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                    </mat-form-field>
@@ -43,7 +43,7 @@
                 <div class="form-group">
                    <label for="senha">Senha</label>
                    <input type="password" class="form-control" id="senha" placeholder="Insira aqui sua senha"
-                      formControlName="Senha">
+                      formControlName="Senha" autocomplete="new-password">
                    <div *ngIf="usuarioForm.invalid && formControls.Senha.errors && !formularioValido"
                       class="errors">
                       <div *ngIf="formControls.Senha.errors">Informe uma senha
